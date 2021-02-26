@@ -210,10 +210,46 @@ vector is one-dimensional object| list is a multidimensional object
 > ratio = captaincy$won / captaincy$played
 > ratio
 ```
-### Mean
+### Adding a column in DataFrame
+```
+> captaincy$victory = ratio
+```
+### Mean, median, mode
 ```
 > mean(captaincy$played)
+> median(captaincy$played)
+> mode(captaincy$played)
 ```
+## Indexing in DataFrames
+### Extract a row
+```
+> captaincy[3,]
+```
+### Extract a column
+```
+> captaincy[,3]
+```
+### Extract columns using numeric indexing
+```
+> captaincy[3]
+```
+### Extract columns using name indexing
+```
+> captaincy["names"]
+```
+### Extract multiple columns using name indexing
+```
+> captaincy[c("names", "won")]
+```
+### Extract more than one rows
+```
+> captaincy[c(2,3), ]
+```
+### Extract rows using logical indexing
+```
+> captaincy[captaincy$played==25,]
+```
+
 >## Various Plots on above DF
 ### Simple Plot on Captaincy year vs Ratio
 ```
@@ -260,5 +296,9 @@ Syntax -
 [1] 3/4
 > 3/4
 [1] 0.75
+```
+# Working Directory
+```
+> getwd()
 ```
 
