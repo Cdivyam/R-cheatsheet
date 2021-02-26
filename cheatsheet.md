@@ -249,7 +249,21 @@ vector is one-dimensional object| list is a multidimensional object
 ```
 > captaincy[captaincy$played==25,]
 ```
-
+### Extracting a single value in a column, row
+```
+> captaincy[[4]][3]
+```
+### Creating a New DataFrame as a subset of actual dataframe
+```
+> subdata <- subset(captaincy, victory>0.3, select = c("names", "played", "won"))
+> subdata
+   names played won
+1   Mahi     45  22
+2 Sourav     49  21
+6 Dravid     25   8
+> print(class(subdata))
+[1] "data.frame"
+```
 >## Various Plots on above DF
 ### Simple Plot on Captaincy year vs Ratio
 ```
