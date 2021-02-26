@@ -182,6 +182,7 @@ vector is one-dimensional object| list is a multidimensional object
 ```
 > m  <-  c("Male","Female","Male","Female","Male","Female","Male","Female")
 ```
+[More on Matrices](#more-on-matrices)
 ### Then make a factor using factor()
 ```
 > f <- factor(m)
@@ -244,6 +245,8 @@ vector is one-dimensional object| list is a multidimensional object
 ### Extract more than one rows
 ```
 > captaincy[c(2,3), ]
+or
+> captaincy[2:3,]
 ```
 ### Extract rows using logical indexing
 ```
@@ -289,6 +292,98 @@ Syntax -
 ```
 > write.csv(captaincy, file="NewCaptaincy.csv", row.names = FALSE)
 ```
+# More on Matrices
+## Create Matrices using some values from dataFrame - as.matrix()
+```
+> subdata = captaincy[1:3, c("played", "won", "lost")]
+> subdata
+  played won lost
+1     45  22   12
+2     49  21   13
+3     47  14   14
+> matrixA <- as.matrix(subdata)
+> matrixA
+  played won lost
+1     45  22   12
+2     49  21   13
+3     47  14   14
+```
+## Create Matrices using Vectors
+```
+> values <- c(1,0,0,0,1,0,0,0,1)
+> matrixB <- matrix(values, nrow=3, ncol=3, byrow = TRUE)
+> matrixB
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+```
+## Basic Operations on Matrices
+### Addition
+```
+> matrixA + matrixB
+  played won lost
+1     46  22   12
+2     49  22   13
+3     47  14   15
+```
+### Subtraction
+```
+> matrixA - matrixB
+  played won lost
+1     44  22   12
+2     49  20   13
+3     47  14   13
+```
+### Division
+```
+> matrixA / matrixB
+  played won lost
+1     45 Inf  Inf
+2    Inf  21  Inf
+3    Inf Inf   14
+```
+### Element-wise multiplication
+```
+> matrixA * matrixB
+  played won lost
+1     45   0    0
+2      0  21    0
+3      0   0   14
+```
+### Matrix Multiplication
+```
+> matrixA %*% matrixB
+  [,1] [,2] [,3]
+1   45   22   12
+2   49   21   13
+3   47   14   14
+```
+### Transpose
+```
+> t(matrixA)
+```
+### Determinant
+```
+> det(matrixA)
+```
+### Inverse
+```
+> solve(matrixA)
+```
+### Sum of a Matrix
+```
+startTime <- Sys.time()
+totalSum <- 0
+for(i in 1:3){
+    for(j in 1:3){
+        totalSum <- totalSum + matrixA[i,j]
+    }
+}
+print(totalSum)
+endTime <- Sys.time()
+print(endTime - startTime)
+```
 ## Show list of Available DataFrames
 ```
 > data()
@@ -313,6 +408,7 @@ Syntax -
 ```
 # Working Directory
 ```
-> getwd()
+> getwd() #GetWorkingDirectory
+> setwd() #SetWorkingDirectory
 ```
 
