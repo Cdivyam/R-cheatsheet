@@ -4,6 +4,9 @@
 R|Rstudio
 ---|---
 R is programming language|Rstudio is an IDE for R(just like vscode, sublime, etc)
+# Installation
+### [R for windows 4.0.4](https://cran.r-project.org/bin/windows/base/R-4.0.4-win.exe)
+### [Rstudio for windows](https://download1.rstudio.org/desktop/windows/RStudio-1.4.1106.exe)
 # Rstudio
 ![](Rstudio-explained.jpg)
 # Multiply
@@ -14,6 +17,7 @@ R is programming language|Rstudio is an IDE for R(just like vscode, sublime, etc
 ### `2+5`
 # Variables
 ### `a <- 2+3` or `a = 2+3`
+>#### Note `<-` and `=` differ in subtle ways but both can be used as assignment operators in our case
 # Subtract
 ### `a-0.16`
 # Power
@@ -36,6 +40,12 @@ R is programming language|Rstudio is an IDE for R(just like vscode, sublime, etc
 ```
 > pi
 [1] 3.141593
+```
+# Comments
+### `#` is comment.
+### Use `Ctrl+Shift+c` to comment the whole line.
+```
+> # This is a comment
 ```
 # Basic Data Types
 | Data Type | Values |
@@ -153,6 +163,33 @@ Vectors|List
 A vector is a single dimensional, homogenous data structure in R| List is a multi dimensional, heterogenous data structure in R
 vector is not recursive| Lists are recursive
 vector is one-dimensional object| list is a multidimensional object
+
+## 3. Arrays: array()
+```
+> a <- array(data = 1:8, dim= c(2,2))
+> a
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+```
+## 4. Matrices: matrix()
+```
+> b <- matrix(data = 1:6, nrow=2, ncol=3)
+> b
+```
+## Factor: Encodes a vector of unique elements (levels) from the given data vector.
+### To create a factor, first create a vector
+```
+> m  <-  c("Male","Female","Male","Female","Male","Female","Male","Female")
+```
+### Then make a factor using factor()
+```
+> f <- factor(m)
+> f
+> levels(f) 
+> unclass(f)
+```
+
 ## 6. Data Frames
 ### Making Dataframe from Multiple vectors
 ```
@@ -177,7 +214,7 @@ vector is one-dimensional object| list is a multidimensional object
 ```
 > mean(captaincy$played)
 ```
-## 6.1 Various Plots on above DF
+>## Various Plots on above DF
 ### Simple Plot on Captaincy year vs Ratio
 ```
 > plot(captaincy$Y, ratio)
@@ -205,5 +242,23 @@ Syntax -
 ## Show list of Available DataFrames
 ```
 > data()
+```
+# Packages
+## Checking for installed packages
+```
+> library()
+```
+## Installing Packages
+```
+> install.packages("MASS")
+> install.packages("ggplot2")
+```
+## Using installed packages
+```
+> library(MASS)
+> fractions(3/4)
+[1] 3/4
+> 3/4
+[1] 0.75
 ```
 
