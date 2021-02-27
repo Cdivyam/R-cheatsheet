@@ -723,21 +723,21 @@ gr_dramaMoc <- group_by(dramaMov,
                         mpaa_rating)
 summarise(gr_dramaMoc, mean(imdb_rating))
 ```
-## Pipe Operator `%>%`
+# Pipe Operator `%>%`
 ### Used to reduce no. of data frames
-### We can write cos(sin(pi)) [cos of sin of pi] as
+## We can write cos(sin(pi)) [cos of sin of pi] as
 ```R
 pi %>% sin() %>% cos()
 ```
-### filter `%>%` groupby `%>%` summarise
+## filter `%>%` groupby `%>%` summarise
 ```R
 movies %>% filter(genre == "Drama") %>% group_by(mpaa_rating) %>% summarise(mean(imdb_rating))
 ```
-### mutate `%>%` ggplot 
+## mutate `%>%` ggplot 
 ```R
 movies %>% mutate(diff = audience_score - critics_score) %>% ggplot(mapping = aes(x=genre, y=diff)) + geom_boxplot()
 ```
-### group_by `%>%` summarise
+## group_by `%>%` summarise
 ```R
 movies %>% group_by(genre, mpaa_rating) %>% summarise(num = n())
 # n() gives the current group size
