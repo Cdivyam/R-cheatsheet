@@ -703,6 +703,45 @@ moviesLess <- select(movies, title:audience_score)
 
 moviesMu <- mutate(moviesLess, CriAUD = critics_score - audience_score)
 ```
+## Summarise
+### Can give mean, median, mode or other important parameters
+```R
+summarise(movies, mean(imdb_rating))
+```
+### summarise with groupby
+#### you won't use `summarise()` just to take the mean, median mode or anything else on a single variable. It is used on a grouped data frame for specific calculations
+```R
+groupMovies <- group_by(movies, genre)
+
+summarise(groupMovies, mean(imdb_rating))
+```
+### filter -> groupby -> summarise
+```R
+dramaMov <- filter(movies, genre == "Drama")
+
+gr_dramaMoc <- group_by(dramaMov,
+                        mpaa_rating)
+summarise(gr_dramaMoc, mean(imdb_rating))
+```
+## Pipe Operator `%>%`
+### Used to reduce no. of data frames
+### We can write cos(sin(pi)) [cos of sin of pi] as
+```R
+pi %>% sin() %>% cos()
+```
+### filter `%>%` groupby `%>%` summarise
+```R
+movies %>% filter(genre == "Drama") %>% group_by(mpaa_rating) %>% summarise(mean(imdb_rating))
+```
+### mutate `%>%` ggplot 
+```R
+movies %>% mutate(diff = audience_score - critics_score) %>% ggplot(mapping = aes(x=genre, y=diff)) + geom_boxplot()
+```
+### group_by `%>%` summarise
+```R
+movies %>% group_by(genre, mpaa_rating) %>% summarise(num = n())
+# n() gives the current group size
+```
 # Functions in R
 ## Creating a function
 ```R
