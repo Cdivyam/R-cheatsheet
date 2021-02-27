@@ -444,6 +444,17 @@ print(endTime - startTime)
 > library(readxl)
 > CaptaincyData <- read_excel("CaptaincyData.xlsx")
 ```
+## JSON Data
+### First Install the package - `rjson`
+```R
+> install.packages("rjson")
+> library("rjson")
+> result <- fromJSON(file = "CaptaincyData.json")
+> View(result)
+> result
+> jdf = as.data.frame(result)
+> View(jdf)
+```
 ## Merge 2 Dataframes
 ```R
 > captaincyOne <- merge(captaincyOne, captaincyTwo, by="names")
