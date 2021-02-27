@@ -763,6 +763,6 @@ z(11,22)
 Action|Shortcut
 ---|---
 Run(on console window)|Enter
-Run single line on on console window|Ctrl + Enter
+Run single line on on source window|Ctrl + Enter
 Clear Console window|Ctrl + L
 Type `<-`| Alt + - 
