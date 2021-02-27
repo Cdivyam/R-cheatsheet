@@ -150,6 +150,7 @@ R is programming language|Rstudio is an IDE for R(just like vscode, sublime, etc
 "h" - histogram-like vertical lines
 "n" - does not produce any points or lines
 ```
+[More on Plotting](#plotting-bar-chart)
 ## 2. List - heterogenous data
 ```R
 > n<- list(TRUE,123L,2.54,"bac",'f')
@@ -211,6 +212,10 @@ vector is one-dimensional object| list is a multidimensional object
 > captaincy$played
 > ratio = captaincy$won / captaincy$played
 > ratio
+```
+### Check Dimensions
+```R
+> dim(capataincy)
 ```
 ### Adding a column in DataFrame
 ```R
@@ -467,4 +472,228 @@ mylist[[2]][,3]  # Indexing 3 column of 2nd object
 listsimple <- c("One", "Two", "Three")
 merged.list <- c(mylist, listsimple)
 merged.list
+```
+# Plotting Bar Chart
+### You know what a bar chart is
+## Simple Barplot
+```R
+barplot(movies$imdb_rating) # all 600 instances
+moviesSub <- movies[1:20,] # only 20 instances
+barplot(moviesSub$imdb_rating)
+```
+## Bar Plot Arguments
+```R
+barplot(moviesSub$imdb_rating,
+        xlab = "Movies",
+        ylab = "IMDB RATING",
+        col = "blue",
+        ylim = c(0,10),
+        main = "Movies' IMDB raing")
+```
+## Show names on X-axis
+```R
+barplot(moviesSub$imdb_rating,
+        xlab = "Movies",
+        ylab = "IMDB RATING",
+        col = "blue",
+        ylim = c(0,10),
+        main = "Movies' IMDB raing",
+        names.arg = moviesSub$title) # Only a few names visible
+barplot(moviesSub$imdb_rating,
+        xlab = "Movies",
+        ylab = "IMDB RATING",
+        col = "blue",
+        ylim = c(0,10),
+        main = "Movies' IMDB raing",
+        names.arg = moviesSub$title,
+        las = 2) # Names perpendicular to X-axis, all visible
+```
+# Scatter Plot - simple plot
+## Plot - Already seen this
+```R
+plot(x = movies$imdb_rating,
+     y = movies$audience_score,
+     main = "IMDB rating vs Audience score",
+     xlab = "IMDB rating",
+     ylab = "Audience Score",
+     xlim = c(0,10),
+     ylim = c(0,100),
+     col = "blue")
+```
+## Correlation Coefficient
+### The correlation coefficient is a statistical measure of the strength of the relationship between the relative movements of two variables. The values range between -1.0 and 1.0. A correlation of -1.0 shows a perfect negative correlation, while a correlation of 1.0 shows a perfect positive correlation.
+```R
+cor(movies$imdb_rating, movies$audience_score)
+```
+# Plotting Histograms
+### Histogram is a visual representation of the distribution of the dataset
+### Used to plot the frequency of score in a continuous dataset
+## Basic Histogram
+```R
+> movies <- read.csv("moviesData.csv")
+> hist(movies$runtime)
+```
+## Customized histogram
+```R
+> hist(movies$runtime,
+     main = "Distribution of movies' runtime",
+     xlab = "Runtime of movies",
+     xlim = c(0,300),
+     col = "blue")
+```
+## Make Histogram Finer or coarser by modifying `breaks` argument
+### Try changing the breaks argument as 1000, 600, 300, 100, 15, 13, 8, 4, 3, 1
+```R
+> hist(movies$runtime,
+     main = "Distribution of movies' runtime",
+     xlab = "Runtime of movies",
+     xlim = c(0,300),
+     col = "blue",
+     breaks = 4)
+```
+# Plotting Pie Chart
+### A circular chart divided into wedge-like sectors, illustrating proportion
+### Total value of Pie is 100%
+## Simple Pie Chart
+```R
+genrecount <- table(movies$genre)
+View(genrecount)
+pie(genrecount)
+```
+## Custom Pie Chart arguments
+```R
+pie(genrecount,
+    main="Proportion of movies' genre",
+    border="blue",
+    col="orange")
+```
+#### Save the Plots
+# More on Basic Plotting
+## Sine and Cosine Curve on same plot
+```R
+plot(x, sin(x),
+     main = "Two graphs in one plot",
+     ylab = "",
+     type = "l",
+     col = "blue")
+lines(x, cos(x),
+      col = "red")
+legend("topleft",
+       c("sin(x)", "cos(x)"),
+       fill = c("blue", "red"))
+```
+# Grammar of Graphics (ggplot2)
+## Installation
+```R
+install.packages("ggplot2")
+```
+## Basic Plot on movies dataset using ggplot
+```R
+library(ggplot2) # import package
+movies <- read.csv("moviesData.csv") # read csv
+ggplot(data = movies, # dataset to use
+       mapping = aes(x=critics_score, # mapping used to apply the mapping
+                     y=audience_score)) + # aes used to specify the mapping
+  geom_point() # draw geometric points defined by x and y co-ordinates
+```
+# Aesthetic Plotting
+### It is a visual property
+### Includes lines, points, symbols, colors and position
+### It is used to add customization to our plots
+## Scatter plot by using genre to color
+```R
+# import package
+library(ggplot2)
+
+# read csv
+movies <- read.csv("moviesData.csv")
+View(movies)
+
+ggplot(data = movies,
+       mapping = aes(x=critics_score,
+                     y=audience_score,
+                     color = genre)) +
+  geom_point()
+```
+## Bar Plot
+```R
+z = factor(movies$mpaa_rating)
+levels(z)
+ggplot(data = movies,
+       mapping = aes(x=mpaa_rating)) + 
+  geom_bar()
+```
+#### *Seems like ggplot can plot character on barplot*
+## Give labels
+```R
+ggplot(data = movies,
+       mapping = aes(x=mpaa_rating)) + 
+  geom_bar() +
+  labs(y="Rating Count",
+       title="Count of mpaa ratings")
+```
+## Give distribution by some other attribute
+```R
+ggplot(data = movies,
+       mapping = aes(x=mpaa_rating,
+                     fill = genre)) + 
+  geom_bar() +
+  labs(y="Rating Count",
+       title="Count of mpaa ratings")
+```
+## Histogram
+```R
+ggplot(data = movies,
+       mapping = aes(x=runtime)) + 
+  geom_histogram() +
+  labs(x="Runtime of Movies",
+       title="Distribution of Runtime")
+```
+## Box plot - ggplot(_data = ..., mapping = aes(...)_) + `geom_boxplot()`
+## Line Plot - ggplot(_data = ..., mapping = aes(...)_) + `geom_line()`
+
+# Dplyr
+## Installation
+```R
+install.packages("dplyr")
+```
+## Some Deplyr functions
+Funtions|Use
+---|---
+filter|to select cases based on their values
+arrange|to order the cases
+select|to select variables based on their names
+mutate|to add new variables that are functions of existing variables
+summarise|to condense multiple values to a single value
+### All these funtions can be combined by `group_by` function. It allows us to perform any operation by a group
+## Filter
+```R
+library(dplyr)
+
+movies <- read.csv("moviesData.csv")
+moviesfilter <- filter(movies, genre == "Comedy")
+
+View(moviesfilter)
+
+moviesComDr <- filter(movies, genre=="Comedy"|genre=="Drama")
+
+moviesComDrP <- filter(movies, genre %in% c("Comedy","Drama"))
+
+moviesComIm <- filter(movies, genre=="Comedy"&imdb_rating>=7.5)
+```
+## Arrange
+```R
+moviesComImD <- arrange(movies, desc(imdb_rating))
+
+moviesGenIm <- arrange(movies, genre, imdb_rating)
+```
+## Select
+```R
+moviesTGI <- select(movies, title, genre, imdb_rating)
+
+moviesTHT <- select(movies, title, starts_with("thtr"))
+```
+## Rename
+```R
+moviesR <- rename(movies, rel_year = "thtr_rel_year")
 ```
