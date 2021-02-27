@@ -697,3 +697,15 @@ moviesTHT <- select(movies, title, starts_with("thtr"))
 ```R
 moviesR <- rename(movies, rel_year = "thtr_rel_year")
 ```
+## Mutate
+```R
+moviesLess <- select(movies, title:audience_score)
+
+moviesMu <- mutate(moviesLess, CriAUD = critics_score - audience_score)
+```
+# Functions in R
+## Creating a function
+```R
+z <- function(x,y){ x+y}
+z(11,22)
+```
