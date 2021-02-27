@@ -759,3 +759,10 @@ movies %>% group_by(genre, mpaa_rating) %>% summarise(num = n())
 z <- function(x,y){ x+y}
 z(11,22)
 ```
+# A few keyboard shortcuts
+Action|Shortcut
+---|---
+Run(on console window)|Enter
+Run single line on on console window|Ctrl + Enter
+Clear Console window|Ctrl + L
+Type `<-`| Alt + - 
